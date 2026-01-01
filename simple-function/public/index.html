@@ -1,0 +1,32 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Netlify Function</title>
+</head>
+<body>
+    <h1>Test Netlify Function</h1>
+    <button onclick="callFunction()">Click to Call Function</button>
+    <div id="result" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+
+    <script>
+        async function callFunction() {
+            // This calls your Netlify Function
+            const response = await fetch('/.netlify/functions/hello', {
+                method: 'POST',  // Try POST or GET
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: "John",
+                    question: "How are you?"
+                })
+            });
+            
+            const data = await response.json();
+            document.getElementById('result').innerHTML = 
+                `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
+</html>
